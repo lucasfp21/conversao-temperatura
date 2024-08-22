@@ -49,6 +49,13 @@
     export PATH="/root/.local/state/fnm_multishells/9_1724364468879/bin/node:$PATH"
     source ~/.bashrc
     echo $PATH
+
+    apt-get install nodejs
+
+    export PATH="/bin/node:$PATH"
+    export PATH="/bin/nodejs:$PATH"
+    source ~/.bashrc
+    echo $PATH
         
 ###################
 
