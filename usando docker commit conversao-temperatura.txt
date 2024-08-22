@@ -1,0 +1,64 @@
+#Preparando o container para gerar uma imagem
+# Vamos utilizar o projeto conversor de temperatura que esta disponivel no https://github.com/lucasfp21/conversao-temperatura
+
+1 - Subir um container com a imagem ubuntu em modo interativo:
+    docker container run -it -p 8080:8080 ubuntu /bin/bash
+
+2 - instalar o node no container:
+    # installs fnm (Fast Node Manager)
+    curl -fsSL https://fnm.vercel.app/install | bash
+
+    # download and install Node.js
+    fnm use --install-if-missing 20
+
+    # verifies the right Node.js version is in the environment
+    node -v # should print `v20.15.1`
+
+    # verifies the right npm version is in the environment
+    npm -v # should print `10.7.0`
+
+3 - copiar pasta do projeto para o container
+    pegar o id do container:
+        docker container ls
+    
+    ir par o diretorio do projeto:
+        cd C:\Users\lucas\Documents\DevopsPro\conversao-temperatura\src
+
+    copiar arquivos:
+        docker container cp . <id>:/app
+
+4 - instalar dependencias do projeto:
+    cd /app
+    npm install
+
+5 - executar projeto:
+    node server.js
+
+6 - testar no browser
+    http:\\localhost:8080
+
+
+7 Adicionar o node na variavel PATH
+    export PATH="/root/.local/state/fnm_multishells/9_1721522063923/bin/node/:$PATH"
+    source ~/.bashrc
+    echo $PATH
+
+    which node
+        /root/.local/state/fnm_multishells/9_1724364468879/bin/node
+
+    export PATH="/root/.local/state/fnm_multishells/9_1724364468879/bin/node:$PATH"
+    source ~/.bashrc
+    echo $PATH
+        
+###################
+
+#Usando o docker container commit:
+1 - para a execução do container
+
+2 - pega o id do container (docker ps -a)
+    docker container commit <id> <nome da imagem>
+
+3 - modos de iniciar o container com a imagem nova
+    docker container run -it -p 8080:8080 <nome-nova-imagem> /bin/bash  (dessa forma teria que iniciar a applicação e nao esta rodando em BG)
+    docker container run -d -p 8080:8080 <nome-nova-imamge> node /app/server.js (roda em modo interativo e ja inicia a app)
+    
