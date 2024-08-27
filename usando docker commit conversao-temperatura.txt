@@ -69,3 +69,114 @@
     docker container run -it -p 8080:8080 <nome-nova-imagem> /bin/bash  (dessa forma teria que iniciar a applicação e nao esta rodando em BG)
     docker container run -d -p 8080:8080 <nome-nova-imamge> node /app/server.js (roda em modo interativo e ja inicia a app)
     
+
+##########################
+docker image history <nome da imagem>:
+    mostra as camadas de açoes feitas no momento de criação da imagem, exemplo:
+        IMAGE          CREATED         CREATED BY                                      SIZE      COMMENT
+        47dc5be9bca9   7 minutes ago   /bin/bash                                       344MB
+        edbfe74c41f8   3 weeks ago     /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+        <missing>      3 weeks ago     /bin/sh -c #(nop) ADD file:c2e78eb585ec4e503…   78.1MB
+        <missing>      3 weeks ago     /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B
+        <missing>      3 weeks ago     /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B
+        <missing>      3 weeks ago     /bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH     0B
+        <missing>      3 weeks ago     /bin/sh -c #(nop)  ARG RELEASE                  0B
+
+########################
+docker image inspector <nome da imagem>:
+    [
+    {
+        "Id": "sha256:47dc5be9bca9a3691c57b3a75c5d8ff4000ca6485f4aa389d6de7a4891b2e85f",
+        "RepoTags": [
+            "conversao-temperatura:latest"
+        ],
+        "RepoDigests": [],
+        "Parent": "sha256:edbfe74c41f8a3501ce542e137cf28ea04dd03e6df8c9d66519b6ad761c2598a",
+        "Comment": "",
+        "Created": "2024-08-22T22:28:36.853720605Z",
+        "Container": "6512cfa8cf31ff9a7ac97ded91f6429c8195f4728ad77493599dcbdefebf1667",
+        "ContainerConfig": {
+            "Hostname": "6512cfa8cf31",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "ubuntu",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "DockerVersion": "20.10.23",
+        "Author": "",
+        "Config": {
+            "Hostname": "6512cfa8cf31",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "ubuntu",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 421921871,
+        "VirtualSize": 421921871,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/cc36ef47708c9196b12422f910f31c33e13514b53c8c0c506202c6ec30756f05/diff",
+                "MergedDir": "/var/lib/docker/overlay2/74f56fa8ddfe053dcf386c47747180a8543fe24e815c2866c3a83dc6225fa190/merged",
+                "UpperDir": "/var/lib/docker/overlay2/74f56fa8ddfe053dcf386c47747180a8543fe24e815c2866c3a83dc6225fa190/diff",
+                "WorkDir": "/var/lib/docker/overlay2/74f56fa8ddfe053dcf386c47747180a8543fe24e815c2866c3a83dc6225fa190/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:f36fd4bb7334b7ae3321e3229d103c4a3e7c10a263379cc6a058b977edfb46de",
+                "sha256:56b390f39c5a73ba7dde9ac41527f52e5649976f5bce8166bdee15e7c31aae3e"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2024-08-22T22:28:37.860211164Z"
+        }
+    }
+]
