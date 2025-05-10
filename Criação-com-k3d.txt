@@ -1,0 +1,59 @@
+# Criacao do cluster
+    k3d cluster create meucluster --servers 3 --agents 3 -p 30000:30000@loadbalancer"
+    kubectl get nodes
+
+# Criar o Dockerfile
+    FROM node:20.9.0-alpine3.18
+    WORKDIR /app
+    COPY package*.json .
+    RUN npm install
+    COPY . .
+    EXPOSE 8080
+    ENTRYPOINT [ "node","server.js" ]
+
+# Buildar a imagem
+    docker build -t lufertony/conversao-temperatura:v1 --push ./src
+
+# Criar o manifesto yaml
+    deployment.yaml
+
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata: 
+          name: conversao-temperatura
+        spec:
+          replicas: 3
+        selector:
+          matchLabels:
+              app: conversao-temperatura
+          template:
+            metadata:
+              labels:
+                app: conversao-temperatura
+            spec:
+              containers:
+                - name: conversao
+                  image: lufertony/conversao-temperatura:v1
+                  ports:
+                    - containerPort: 8080
+                      name: http
+                      protocol: TCP
+
+ ---
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: conversao-temperatura
+        spec:
+          selector:
+            app: conversao-temperatura
+          type: NodePort
+          ports:
+            - name: http
+              port: 80
+              targetPort: 8080
+              protocol: TCP
+              nodePort: 30000
+
+# criar o deployment
+    kubectl apply -f deployment.yaml
